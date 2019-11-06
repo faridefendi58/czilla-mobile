@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Chordzilla</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Chordzilla</string>
+    <string name="nav_header_subtitle">Your Simple Chords Library</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_favorite">Favorites</string>
+    <string name="menu_my_song">My Songs</string>
+    <string name="menu_history">History</string>
+    <string name="menu_chart">Charts</string>
+    <string name="menu_request_chords">Chords Request</string>
+    <string name="menu_about">About</string>
+</resources>
