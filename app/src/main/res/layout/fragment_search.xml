@@ -148,6 +148,22 @@
 
         </LinearLayout>
 
+        <LinearLayout
+                android:id="@+id/result_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerResult"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cacheColorHint="#0000"
+                    android:scrollbars="none"
+                    android:scrollingCache="true" />
+
+        </LinearLayout>
+
     </RelativeLayout>
 
 </LinearLayout>
