@@ -1,8 +1,12 @@
 package id.web.jagungbakar.chordzilla.ui.about;
 
+import android.os.Build;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import id.web.jagungbakar.chordzilla.R;
 
 public class AboutViewModel extends ViewModel {
 
@@ -10,7 +14,7 @@ public class AboutViewModel extends ViewModel {
 
     public AboutViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is about fragment");
+        mText.setValue("Version : "+ R.string.app_version);
     }
 
     public LiveData<String> getText() {
