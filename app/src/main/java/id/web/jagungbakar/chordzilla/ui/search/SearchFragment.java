@@ -46,7 +46,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import id.web.jagungbakar.chordzilla.MainActivity;
 import id.web.jagungbakar.chordzilla.R;
 import id.web.jagungbakar.chordzilla.utils.AppController;
 import id.web.jagungbakar.chordzilla.utils.Server;
@@ -194,10 +193,14 @@ public class SearchFragment extends Fragment {
         final String query = et_search.getText().toString().trim();
         if (!query.equals("")) {
             try {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("limit", "10");
-                params.put("q", query);
-                buildSearchResultList(params);
+                if (!Server.IS_DEBUG) {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("limit", "10");
+                    params.put("q", query);
+                    buildSearchResultList(params);
+                } else {
+                    dummyData();
+                }
             } catch (Exception e){e.printStackTrace();}
             mAdapterSuggestion.addSearchHistory(query);
         } else {
@@ -244,10 +247,10 @@ public class SearchFragment extends Fragment {
                                     sAdapter.setOnItemClickListener(new AdapterListSearch.OnItemClickListener() {
                                         @Override
                                         public void onItemClick(View view, SerializableChord obj, int position) {
-                                            /*Intent newActivity = new Intent(getActivity().getBaseContext(), ChordDetailActivity.class);
+                                            Intent newActivity = new Intent(getActivity().getBaseContext(), SearchDetailActivity.class);
                                             SerializableChord chord = list_chords.get(position);
                                             newActivity.putExtra("chord_intent", chord);
-                                            startActivity(newActivity);*/
+                                            startActivity(newActivity);
                                         }
                                     });
 
@@ -317,5 +320,52 @@ public class SearchFragment extends Fragment {
 
     public interface VolleyCallback {
         void onSuccess(String result);
+    }
+
+    private void dummyData() {
+        String result = Server.DUMMY_DATA;
+        try {
+            JSONObject jObj = new JSONObject(result);
+            int success = jObj.getInt("success");
+            // Check for error node in json
+            if (success == 1) {
+                list_chords.clear();
+                JSONArray data = jObj.getJSONArray("data");
+                for(int n = 0; n < data.length(); n++) {
+                    JSONObject data_n = data.getJSONObject(n);
+                    SerializableChord chord = new SerializableChord(
+                            data_n.getInt("id"),
+                            data_n.getString("title"),
+                            data_n.getString("chord"),
+                            data_n.getString("chord_permalink")
+                    );
+                    chord.setArtistName(data_n.getString("artist_name"));
+                    list_chords.add(chord);
+                }
+                result_container.setVisibility(View.VISIBLE);
+                lyt_no_result.setVisibility(View.GONE);
+
+                AdapterListSearch sAdapter = new AdapterListSearch(context , list_chords);
+                recyclerResult.setAdapter(sAdapter);
+
+                sAdapter.setOnItemClickListener(new AdapterListSearch.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, SerializableChord obj, int position) {
+                        Intent newActivity = new Intent(getActivity().getBaseContext(), SearchDetailActivity.class);
+                        SerializableChord chord = list_chords.get(position);
+                        newActivity.putExtra("chord_intent", chord);
+                        startActivity(newActivity);
+                    }
+                });
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        progress_bar.setVisibility(View.GONE);
+                        lyt_no_result.setVisibility(View.GONE);
+                    }
+                }, 2000);
+            }
+        } catch (Exception e){e.printStackTrace();}
     }
 }

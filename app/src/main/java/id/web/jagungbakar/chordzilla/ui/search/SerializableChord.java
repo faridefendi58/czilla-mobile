@@ -44,6 +44,20 @@ public class SerializableChord implements Serializable {
 
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    public String getTitle() {
+        return title;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+    public String getContent() {
+        return content;
+    }
+
     public void setSlug(String slug) {
         this.slug = slug;
     }
