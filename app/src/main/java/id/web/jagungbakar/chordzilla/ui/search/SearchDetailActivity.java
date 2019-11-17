@@ -95,7 +95,7 @@ public class SearchDetailActivity extends AppCompatActivity {
 
         try {
             String style = "<style>";
-            style += "body{font-size: 15px;}";
+            style += "body{font-size: 15px;color:#546E7A;}";
             style += ".ft-14{font-size:10px !important;}";
             style += ".ft-16{font-size:16px !important;}";
             style += ".ft-17{font-size:17px !important;}";
@@ -104,8 +104,9 @@ public class SearchDetailActivity extends AppCompatActivity {
             style += ".ft-22{font-size:22px !important;}";
             style += ".ft-24{font-size:24px !important;}";
             style += ".ft-26{font-size:26px !important;}";
-            style += "a {color: #00ca9b;text-decoration:none;}";
-            style += "p{line-height: 2;}";
+            style += "a.chord{color: #37474F;text-decoration:none;font-weight: bold;font-size: 15px;}";
+            style += "p{line-height: 2.4;}";
+            style += "sup{position: relative;line-height: 0;vertical-align: baseline;top:-1.3em;}";
             style += "</style>";
 
             style += "<script type='text/javascript' src='jquery.min.js'></script>";

@@ -3,6 +3,7 @@ package id.web.jagungbakar.chordzilla.ui.search;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.FileObserver;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -99,7 +100,9 @@ public class SearchFragment extends Fragment {
         //set data and list adapter suggestion
         mAdapterSuggestion = new AdapterSuggestionSearch(context);
         recyclerSuggestion.setAdapter(mAdapterSuggestion);
-        showSuggestionSearch();
+        ViewAnimation.collapse(lyt_suggestion);
+
+        //showSuggestionSearch();
         mAdapterSuggestion.setOnItemClickListener(new AdapterSuggestionSearch.OnItemClickListener() {
             @Override
             public void onItemClick(View view, String viewModel, int pos) {
@@ -142,6 +145,7 @@ public class SearchFragment extends Fragment {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 showSuggestionSearch();
+                bt_back.setImageResource(R.drawable.ic_arrow_back);
                 getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                 return false;
             }
@@ -260,7 +264,7 @@ public class SearchFragment extends Fragment {
                                             progress_bar.setVisibility(View.GONE);
                                             lyt_no_result.setVisibility(View.GONE);
                                         }
-                                    }, 2000);
+                                    }, 1000);
                                 }
                             } else {
                                 Toast.makeText(getContext(), "Failed!, No data found.",
