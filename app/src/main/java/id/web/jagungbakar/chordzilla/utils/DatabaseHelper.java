@@ -61,7 +61,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Database {
 
         db.execSQL("CREATE TABLE " + DatabaseContents.TABLE_HISTORY + "("
 
-                + "_id INTEGER PRIMARY KEY,"
+                + "_id INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + "song_id INTEGER DEFAULT 0,"
                 + "viewed_counter INTEGER DEFAULT 0,"
                 + "date_added DATETIME,"

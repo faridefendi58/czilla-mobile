@@ -1,5 +1,6 @@
 package id.web.jagungbakar.chordzilla.ui.search;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
@@ -23,6 +24,8 @@ import androidx.appcompat.widget.Toolbar;
 import org.json.JSONObject;
 
 import id.web.jagungbakar.chordzilla.R;
+import id.web.jagungbakar.chordzilla.controllers.SongController;
+import id.web.jagungbakar.chordzilla.utils.DateTimeStrategy;
 
 public class SearchDetailActivity extends AppCompatActivity {
 
@@ -32,6 +35,7 @@ public class SearchDetailActivity extends AppCompatActivity {
     private LinearLayout chord_content_container;
     private int screen_width = 0;
     private SerializableChord chord;
+    private SerializableChord saved_chord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,11 @@ public class SearchDetailActivity extends AppCompatActivity {
         if (intent.hasExtra("chord_intent") && intent.hasExtra("chord_intent")) {
             try {
                 chord = (SerializableChord)intent.getExtras().get("chord_intent");
+                saved_chord = SongController.getInstance().getSong(chord.getId());
+                if (saved_chord == null) {
+                    SongController.getInstance().addSong(chord);
+                }
+                //Log.e(getClass().getSimpleName(), "chord : "+ chord.toMap().toString());
             } catch (Exception e){e.printStackTrace();}
         }
 

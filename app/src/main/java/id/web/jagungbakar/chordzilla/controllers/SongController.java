@@ -1,6 +1,7 @@
 package id.web.jagungbakar.chordzilla.controllers;
 
 import android.content.ContentValues;
+import android.util.Log;
 
 import java.util.List;
 
@@ -87,6 +88,17 @@ public class SongController {
                 content3.put("date_added", DateTimeStrategy.getCurrentTime());
                 int id3 = database.insert(DatabaseContents.TABLE_GENRES.toString(), content3);
             }
+            Log.e(getClass().getSimpleName(), "has artist data : "+ has_artist_data);
+            Log.e(getClass().getSimpleName(), "has genre data : "+ has_genre_data);
+            // saved a history for the first time
+            try {
+                ContentValues content4 = new ContentValues();
+                content4.put("song_id", song.getId());
+                content4.put("viewed_counter", 1);
+                content4.put("date_added", DateTimeStrategy.getCurrentTime());
+                content4.put("date_updated", DateTimeStrategy.getCurrentTime());
+                int id4 = database.insert(DatabaseContents.TABLE_HISTORY.toString(), content4);
+            } catch (Exception e){e.printStackTrace();}
         }
 
         return id;
@@ -99,5 +111,41 @@ public class SongController {
         }
 
         return del;
+    }
+
+    public SerializableChord getSong(int id) {
+        String queryString = "SELECT t._id AS song_id, t.title, t.content, t.chord_permalink, t.slug, t.artist_id, t.genre_id, t.story, t.published_at, " +
+                "a.name AS artist_name, a.slug AS artist_slug, g.name AS genre_name " +
+                "FROM " + DatabaseContents.TABLE_SONGS + " t " +
+                "LEFT JOIN "+ DatabaseContents.TABLE_ARTISTS +" a ON a._id = t.artist_id " +
+                "LEFT JOIN "+ DatabaseContents.TABLE_GENRES +" g ON g._id = t.genre_id " +
+                "WHERE t._id ="+ id;
+        List<Object> songs = database.select(queryString);
+        SerializableChord song = null;
+        if (songs != null && songs.size() > 0) {
+            ContentValues csong = (ContentValues) songs.get(0);
+            if (csong.containsKey("song_id")) {
+                song = new SerializableChord(
+                        csong.getAsInteger("song_id"),
+                        csong.getAsString("title"),
+                        csong.getAsString("content"),
+                        csong.getAsString("chord_permalink")
+                );
+                song.setSlug(csong.getAsString("slug"));
+                song.setArtistId(csong.getAsInteger("artist_id"));
+                song.setArtistName(csong.getAsString("artist_name"));
+                song.setArtistSlug(csong.getAsString("artist_slug"));
+                if (csong.containsKey("story") && csong.getAsString("story") != null) {
+                    song.setStory(csong.getAsString("story"));
+                }
+                song.setGenreId(csong.getAsInteger("genre_id"));
+                if (csong.containsKey("genre_name") && csong.getAsString("genre_name") != null) {
+                    song.setGenreName(csong.getAsString("genre_name"));
+                }
+                song.setPublishedAt(csong.getAsString("published_at"));
+            }
+        }
+
+        return song;
     }
 }

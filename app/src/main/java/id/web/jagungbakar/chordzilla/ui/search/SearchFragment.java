@@ -239,7 +239,19 @@ public class SearchFragment extends Fragment {
                                                 data_n.getString("chord"),
                                                 data_n.getString("chord_permalink")
                                                 );
+
+                                        chord.setSlug(data_n.getString("slug"));
+                                        chord.setArtistId(data_n.getInt("artist_id"));
                                         chord.setArtistName(data_n.getString("artist_name"));
+                                        chord.setArtistSlug(data_n.getString("artist_slug"));
+                                        if (data_n.has("story") && data_n.getString("story") != null) {
+                                            chord.setStory(data_n.getString("story"));
+                                        }
+                                        chord.setGenreId(data_n.getInt("genre_id"));
+                                        if (data_n.has("genre_name") && data_n.getString("genre_name") != null) {
+                                            chord.setGenreName(data_n.getString("genre_name"));
+                                        }
+                                        chord.setPublishedAt(data_n.getString("published_at"));
                                         list_chords.add(chord);
                                     }
                                     result_container.setVisibility(View.VISIBLE);
@@ -343,7 +355,18 @@ public class SearchFragment extends Fragment {
                             data_n.getString("chord"),
                             data_n.getString("chord_permalink")
                     );
+                    chord.setSlug(data_n.getString("slug"));
+                    chord.setArtistId(data_n.getInt("artist_id"));
                     chord.setArtistName(data_n.getString("artist_name"));
+                    chord.setArtistSlug(data_n.getString("artist_slug"));
+                    if (data_n.has("story") && data_n.getString("story") != null) {
+                        chord.setStory(data_n.getString("story"));
+                    }
+                    chord.setGenreId(data_n.getInt("genre_id"));
+                    if (data_n.has("genre_name") && data_n.getString("genre_name") != null) {
+                        chord.setGenreName(data_n.getString("genre_name"));
+                    }
+                    chord.setPublishedAt(data_n.getString("published_at"));
                     list_chords.add(chord);
                 }
                 result_container.setVisibility(View.VISIBLE);
