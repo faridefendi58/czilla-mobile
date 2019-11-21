@@ -8,6 +8,7 @@ public class SerializableChord implements Serializable {
     private int id;
     private String title;
     private String slug;
+    private String story;
     private String content;
     private String chord_permalink;
     private int artist_id;
@@ -15,6 +16,7 @@ public class SerializableChord implements Serializable {
     private String artist_slug;
     private int genre_id;
     private String genre_name;
+    private String published_at;
 
     public SerializableChord(int id, String title, String content, String chord_permalink) {
         this.id = id;
@@ -32,6 +34,7 @@ public class SerializableChord implements Serializable {
         map.put("id", id+"");
         map.put("title", title);
         map.put("slug", slug);
+        map.put("story", story);
         map.put("content", content);
         map.put("chord_permalink", chord_permalink);
         map.put("artist_id", artist_id+"");
@@ -39,9 +42,17 @@ public class SerializableChord implements Serializable {
         map.put("artist_slug", artist_slug);
         map.put("genre_id", genre_id+"");
         map.put("genre_name", genre_name);
+        map.put("published_at", published_at);
 
         return map;
 
+    }
+
+    public void setId(int _id) {
+        this.id = _id;
+    }
+    public int getId() {
+        return id;
     }
 
     public void setTitle(String title) {
@@ -56,6 +67,13 @@ public class SerializableChord implements Serializable {
     }
     public String getContent() {
         return content;
+    }
+
+    public void setStory(String story) {
+        this.story = story;
+    }
+    public String getStory() {
+        return story;
     }
 
     public void setSlug(String slug) {
@@ -98,6 +116,20 @@ public class SerializableChord implements Serializable {
     }
     public String getGenreName() {
         return genre_name;
+    }
+
+    public void setChordPermalink(String chord_permalink) {
+        this.chord_permalink = chord_permalink;
+    }
+    public String getChordPermalink() {
+        return chord_permalink;
+    }
+
+    public void setPublishedAt(String published_at) {
+        this.published_at = published_at;
+    }
+    public String getPublishedAt() {
+        return published_at;
     }
 }
 
