@@ -35,7 +35,7 @@ public class SearchDetailActivity extends AppCompatActivity {
     private LinearLayout chord_content_container;
     private int screen_width = 0;
     private SerializableChord chord;
-    private SerializableChord saved_chord;
+    private Boolean has_saved_song = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +46,11 @@ public class SearchDetailActivity extends AppCompatActivity {
         if (intent.hasExtra("chord_intent") && intent.hasExtra("chord_intent")) {
             try {
                 chord = (SerializableChord)intent.getExtras().get("chord_intent");
-                saved_chord = SongController.getInstance().getSong(chord.getId());
-                if (saved_chord == null) {
+                has_saved_song = SongController.getInstance().hasSong(chord.getId());
+                if (!has_saved_song) {
                     SongController.getInstance().addSong(chord);
+                    Log.e(getClass().getSimpleName(), "insert new song : "+ chord.toMap().toString());
                 }
-                //Log.e(getClass().getSimpleName(), "chord : "+ chord.toMap().toString());
             } catch (Exception e){e.printStackTrace();}
         }
 
@@ -95,12 +95,6 @@ public class SearchDetailActivity extends AppCompatActivity {
         Point size = new Point();
         display.getSize(size);
         screen_width = size.x;
-
-        /*Log.e(getClass().getSimpleName(), "screen_width : "+ screen_width);
-        if (screen_width > 900) {
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(640, LinearLayout.LayoutParams.WRAP_CONTENT);
-            chord_webview.setLayoutParams(params);
-        }*/
 
         try {
             String style = "<style>";

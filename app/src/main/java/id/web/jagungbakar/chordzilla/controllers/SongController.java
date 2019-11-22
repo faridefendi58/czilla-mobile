@@ -54,7 +54,7 @@ public class SongController {
             // add artist
             Boolean has_artist_data = false;
             try {
-                List<Object> artists = database.select("SELECT _id FROM " + DatabaseContents.TABLE_ARTISTS);
+                List<Object> artists = database.select("SELECT _id FROM " + DatabaseContents.TABLE_ARTISTS + " WHERE _id ="+ song.getArtistId());
                 if (artists.size() > 0) {
                     ContentValues c_artist = (ContentValues) artists.get(0);
                     if (c_artist.containsKey("_id")) {
@@ -73,7 +73,7 @@ public class SongController {
             // add genre
             Boolean has_genre_data = false;
             try {
-                List<Object> genres = database.select("SELECT _id FROM " + DatabaseContents.TABLE_GENRES);
+                List<Object> genres = database.select("SELECT _id FROM " + DatabaseContents.TABLE_GENRES +" WHERE _id ="+ song.getGenreId());
                 if (genres.size() > 0) {
                     ContentValues c_genre = (ContentValues) genres.get(0);
                     if (c_genre.containsKey("_id")) {
@@ -147,5 +147,17 @@ public class SongController {
         }
 
         return song;
+    }
+
+    public Boolean hasSong(int song_id) {
+        Boolean has_song = false;
+        try {
+            List<Object> songs = database.select("SELECT _id FROM " + DatabaseContents.TABLE_SONGS + " WHERE _id =" + song_id);
+            if (songs != null && songs.size() > 0) {
+                has_song = true;
+            }
+        } catch (Exception e) {e.printStackTrace();}
+
+        return has_song;
     }
 }
