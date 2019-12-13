@@ -78,6 +78,7 @@ public class SearchFragment extends Fragment {
         context = container.getContext();
 
         initComponent();
+        initLatestChord();
         return root;
     }
 
@@ -394,5 +395,99 @@ public class SearchFragment extends Fragment {
                 }, 2000);
             }
         } catch (Exception e){e.printStackTrace();}
+    }
+
+    private void initLatestChord() {
+        try {
+            if (!Server.IS_DEBUG) {
+                hideKeyboard();
+
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("limit", "10");
+                params.put("order_by", "t.published_at");
+                params.put("cached", "1");
+                buildLatestResultList(params);
+            }
+        } catch (Exception e){e.printStackTrace();}
+    }
+
+    List<SerializableChord> list_latest_chords = new ArrayList<SerializableChord>();
+
+    public void buildLatestResultList(final Map<String, String> params) {
+        progress_bar.setVisibility(View.VISIBLE);
+        ViewAnimation.collapse(lyt_suggestion);
+        lyt_no_result.setVisibility(View.GONE);
+
+        String url = Server.URL + "chord/search?api-key=" + Server.API_KEY;
+        _string_request(Request.Method.GET, url, params, false,
+                new VolleyCallback() {
+                    @Override
+                    public void onSuccess(String result) {
+                        try {
+                            Log.e(getClass().getSimpleName(), "result data : "+ result);
+                            if (result.contains("success")) {
+                                JSONObject jObj = new JSONObject(result);
+                                int success = jObj.getInt("success");
+                                // Check for error node in json
+                                if (success == 1) {
+                                    list_chords.clear();
+                                    JSONArray data = jObj.getJSONArray("data");
+                                    for(int n = 0; n < data.length(); n++) {
+                                        JSONObject data_n = data.getJSONObject(n);
+                                        SerializableChord chord = new SerializableChord(
+                                                data_n.getInt("id"),
+                                                data_n.getString("title"),
+                                                data_n.getString("chord"),
+                                                data_n.getString("chord_permalink")
+                                        );
+
+                                        chord.setSlug(data_n.getString("slug"));
+                                        chord.setArtistId(data_n.getInt("artist_id"));
+                                        chord.setArtistName(data_n.getString("artist_name"));
+                                        chord.setArtistSlug(data_n.getString("artist_slug"));
+                                        if (data_n.has("story") && data_n.getString("story") != null) {
+                                            chord.setStory(data_n.getString("story"));
+                                        }
+                                        chord.setGenreId(data_n.getInt("genre_id"));
+                                        if (data_n.has("genre_name") && data_n.getString("genre_name") != null) {
+                                            chord.setGenreName(data_n.getString("genre_name"));
+                                        }
+                                        chord.setPublishedAt(data_n.getString("published_at"));
+                                        list_latest_chords.add(chord);
+                                    }
+                                    result_container.setVisibility(View.VISIBLE);
+                                    lyt_no_result.setVisibility(View.GONE);
+
+                                    AdapterListSearch sAdapter = new AdapterListSearch(context , list_latest_chords);
+                                    recyclerResult.setAdapter(sAdapter);
+
+                                    sAdapter.setOnItemClickListener(new AdapterListSearch.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(View view, SerializableChord obj, int position) {
+                                            Intent newActivity = new Intent(getActivity().getBaseContext(), SearchDetailActivity.class);
+                                            SerializableChord chord = list_latest_chords.get(position);
+                                            newActivity.putExtra("chord_intent", chord);
+                                            startActivity(newActivity);
+                                        }
+                                    });
+
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            progress_bar.setVisibility(View.GONE);
+                                            lyt_no_result.setVisibility(View.GONE);
+                                        }
+                                    }, 1000);
+                                }
+                            } else {
+                                progress_bar.setVisibility(View.GONE);
+                                lyt_no_result.setVisibility(View.VISIBLE);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 }
