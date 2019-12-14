@@ -62,7 +62,6 @@
                             android:background="@android:color/transparent"
                             android:hint="Search"
                             android:imeOptions="actionSearch"
-                            android:focusable="false"
                             android:maxLines="1"
                             android:singleLine="true">
 
