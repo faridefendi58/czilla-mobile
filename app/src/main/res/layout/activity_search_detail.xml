@@ -106,7 +106,9 @@
                         android:layout_weight="1"
                         app:srcCompat="@drawable/ic_favorite_black_24dp"
                         android:paddingTop="@dimen/spacing_small"
-                        android:background="@color/overlay_light_10"/>
+                        android:background="@color/overlay_light_10"
+                        android:clickable="true"
+                        android:onClick="addToFavorite"/>
 
                 <ImageButton
                         android:layout_width="0dp"

@@ -17,6 +17,7 @@ public class SerializableChord implements Serializable {
     private int genre_id;
     private String genre_name;
     private String published_at;
+    private int is_favorite;
 
     public SerializableChord(int id, String title, String content, String chord_permalink) {
         this.id = id;
@@ -42,6 +43,7 @@ public class SerializableChord implements Serializable {
         map.put("artist_slug", artist_slug);
         map.put("genre_id", genre_id+"");
         map.put("genre_name", genre_name);
+        map.put("is_favorite", is_favorite+"");
         map.put("published_at", published_at);
 
         return map;
@@ -130,6 +132,13 @@ public class SerializableChord implements Serializable {
     }
     public String getPublishedAt() {
         return published_at;
+    }
+
+    public void setIsFavorite(int _is_favorite) {
+        this.is_favorite = _is_favorite;
+    }
+    public int getIsFavorite() {
+        return is_favorite;
     }
 }
 

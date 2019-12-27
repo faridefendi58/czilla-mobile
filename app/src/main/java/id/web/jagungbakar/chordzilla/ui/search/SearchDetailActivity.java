@@ -12,11 +12,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -123,6 +125,19 @@ public class SearchDetailActivity extends AppCompatActivity {
             String html_data = "<html>"+ style +"<body>" + chord_content + "</body></html>";
 
             chord_webview.loadDataWithBaseURL("file:///android_asset/", html_data, "text/html", "utf-8", null);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void addToFavorite(View view) {
+        try {
+            if (chord.getIsFavorite() == 0) {
+                Boolean addToFav = SongController.getInstance().addToFavorite(chord.getId());
+                if (addToFav) {
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.message_success_add_to_favorite), Toast.LENGTH_SHORT).show();
+                }
+            }
         } catch (Exception e){
             e.printStackTrace();
         }
