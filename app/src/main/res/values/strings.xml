@@ -17,6 +17,7 @@
     <string name="menu_search">Search</string>
     <string name="menu_favorite">Favorites</string>
     <string name="menu_my_song">My Songs</string>
+    <string name="menu_artists">Artists</string>
     <string name="menu_history">History</string>
     <string name="menu_chart">Charts</string>
     <string name="menu_request_chords">Chords Request</string>

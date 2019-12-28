@@ -13,9 +13,9 @@
                 android:icon="@drawable/ic_menu_favorite"
                 android:title="@string/menu_favorite" />
         <item
-                android:id="@+id/nav_my_song"
-                android:icon="@drawable/ic_menu_my_songs"
-                android:title="@string/menu_my_song" />
+                android:id="@+id/nav_artists"
+                android:icon="@drawable/ic_menu_artists"
+                android:title="@string/menu_artists" />
         <item
                 android:id="@+id/nav_history"
                 android:icon="@drawable/ic_menu_history"

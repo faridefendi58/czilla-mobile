@@ -18,10 +18,10 @@
             tools:layout="@layout/fragment_favorite" />
 
     <fragment
-            android:id="@+id/nav_my_song"
-            android:name="id.web.jagungbakar.chordzilla.ui.mysong.MySongsFragment"
-            android:label="@string/menu_my_song"
-            tools:layout="@layout/fragment_my_songs" />
+            android:id="@+id/nav_artists"
+            android:name="id.web.jagungbakar.chordzilla.ui.artist.ArtistsFragment"
+            android:label="@string/menu_artists"
+            tools:layout="@layout/fragment_artists" />
 
     <fragment
             android:id="@+id/nav_history"
